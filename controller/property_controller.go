@@ -9,7 +9,7 @@ import (
 )
 
 func GetProperty(resp http.ResponseWriter, req *http.Request) {
-	propertyId, err := strconv.ParseInt(req.URL.Query().Get("property_id"), 10, 64)
+	propertyId, err := strconv.ParseInt(req.URL.Query().Get("id"), 10, 64)
 	if err != nil {
 		apiErr := &utils.ApplicationError{
 			Message:    "property_id must be a number",
@@ -29,5 +29,9 @@ func GetProperty(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	jsonValue, _ := json.Marshal(property)
+	resp.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	if err := json.NewEncoder(resp).Encode(propertyId); err != nil {
+		panic(err)
+	}
 	resp.Write(jsonValue)
 }

@@ -6,11 +6,7 @@ import (
 	"net/http"
 )
 
-var (
-	property = map[int64]*Property{
-		1: {},
-	}
-)
+var property []*Property
 
 func GetProperty(propertyId int64) (*Property, *utils.ApplicationError) {
 	if property := property[propertyId]; property != nil {
